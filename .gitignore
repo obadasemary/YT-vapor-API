@@ -1,12 +1,53 @@
+# Swift Package Manager
 Packages
 .build
+.swiftpm
+Package.resolved
+
+# Xcode
 xcuserdata
 *.xcodeproj
 DerivedData/
+*.xcworkspace
+*.playground
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
 .DS_Store
-db.sqlite
-.swiftpm
+.AppleDouble
+.LSOverride
+._*
+
+# Environment Variables
 .env
 .env.*
 !.env.example
+
+# Databases
+db.sqlite
+db.sqlite-shm
+db.sqlite-wal
+*.db
+
+# Testing
 default.profraw
+*.profdata
+.coverage
+
+# Logs
+*.log
+logs/
+
+# Docker
+docker-compose.override.yml
+
+# Temporary files
+*.tmp
+*.temp
+.vapor/
