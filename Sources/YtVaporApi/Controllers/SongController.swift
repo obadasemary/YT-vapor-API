@@ -9,12 +9,13 @@ import Fluent
 import Vapor
 
 struct SongController: RouteCollection {
-    func boot(routes: any Vapor.RoutesBuilder) throws {
+    func boot(routes: any RoutesBuilder) throws {
         let songs = routes.grouped("songs")
-        
         songs.get(use: index)
         songs.post(use: create)
+
         let song = songs.grouped(":songID")
+        song.get(use: show)
         song.put(use: update)
         song.delete(use: delete)
     }
@@ -42,6 +43,15 @@ struct SongController: RouteCollection {
         try await song.save(on: req.db)
         return song.toDTO()
     }
+    
+    @Sendable
+    func show(req: Request) async throws -> SongDTO {
+        guard let song = try await Song.find(req.parameters.get("songID"), on: req.db) else {
+            throw Abort(.notFound)
+        }
+        return song.toDTO()
+    }
+
     @Sendable
     func delete(req: Request) async throws -> HTTPStatus {
         guard let song = try await Song.find(req.parameters.get("songID"), on: req.db) else {
