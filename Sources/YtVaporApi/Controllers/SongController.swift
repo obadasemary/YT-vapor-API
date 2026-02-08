@@ -16,6 +16,7 @@ struct SongController: RouteCollection {
         songs.post(use: create)
         let song = songs.grouped(":songID")
         song.put(use: update)
+        song.delete(use: delete)
     }
     
     @Sendable
@@ -40,5 +41,13 @@ struct SongController: RouteCollection {
         if let artist = dto.artist { song.artist = artist }
         try await song.save(on: req.db)
         return song.toDTO()
+    }
+    @Sendable
+    func delete(req: Request) async throws -> HTTPStatus {
+        guard let song = try await Song.find(req.parameters.get("songID"), on: req.db) else {
+            throw Abort(.notFound)
+        }
+        try await song.delete(on: req.db)
+        return .noContent
     }
 }
