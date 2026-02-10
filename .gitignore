@@ -14,6 +14,7 @@ DerivedData/
 # IDEs
 .vscode/
 .idea/
+.claude/*.local.*
 *.swp
 *.swo
 *~
